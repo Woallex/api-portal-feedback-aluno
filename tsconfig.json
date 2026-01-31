@@ -3,12 +3,13 @@
     "rootDir": "./src",
     "outDir": "./dist",
 
-    "module": "nodenext",
+    "module": "CommonJS",
     "target": "esnext",
     "types": [],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
+    "esModuleInterop": true,
 
     "noEmit": true,
     "allowImportingTsExtensions": true,
@@ -18,7 +19,6 @@
 
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",

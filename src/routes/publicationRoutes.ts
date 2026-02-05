@@ -1,8 +1,11 @@
 import { Router } from "express";
-import * as postController from "../controllers/postController.ts";
+import * as publicationController from "../controllers/publicationController";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const router = Router();
 
-router.get("/", postController.getAllPosts);
+router.get("/", publicationController.getPublications);
+
+router.post("/", authMiddleware, publicationController.createPublication);
 
 export default router;

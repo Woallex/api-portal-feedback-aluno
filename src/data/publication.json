@@ -222,5 +222,13 @@
         "categoria": "Segurança",
         "data": "17/12/2025",
         "autor": "aluno1@ifce.edu.br"
+    },
+    {
+        "id": 29,
+        "title": "Teste no Postman",
+        "description": "Testando a criação de publicação no Postman",
+        "category": "Segurança",
+        "data": "05/02/2026",
+        "author": "aluno1@ifce.edu.br"
     }
 ]

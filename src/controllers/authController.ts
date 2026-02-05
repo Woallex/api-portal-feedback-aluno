@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import path from "path";
 import { ApiResponse, User } from "../models/Types";
 
-const usersPath = path.join(__dirname, "..", "data", "usuarios.json");
-const SECRET_KEY = process.env.JWT_SECRET || "tcc_secret_key_2024";
+const usersPath = path.join(__dirname, "..", "data", "users.json");
+const SECRET_KEY = process.env.JWT_SECRET || "secret_key";
 
 export const login = (req: Request, res: Response) => {
   try {

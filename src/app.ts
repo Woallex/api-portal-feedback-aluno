@@ -1,17 +1,21 @@
 import cors from "cors";
-import type { Application, Request, Response } from "express";
-import express from "express";
-import postRouts from "./routes/postRoutes.ts";
+import express, { Application } from "express";
+import authRoutes from "./routes/authRoutes";
+import publicationRoutes from "./routes/publicationRoutes";
 
 const app: Application = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://portal-feedback-aluno.vercel.app",
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 
-app.use("/posts", postRouts);
+app.use("/auth", authRoutes);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("API rodando!");
-});
+app.use("/publications", publicationRoutes);
 
 export default app;

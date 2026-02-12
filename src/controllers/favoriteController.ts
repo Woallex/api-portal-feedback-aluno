@@ -8,7 +8,7 @@ const publicationPath = path.resolve(
   __dirname,
   "..",
   "data",
-  "publications.json",
+  "publication.json",
 );
 
 const getData = (filePath: string) => {

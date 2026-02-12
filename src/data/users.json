@@ -3,7 +3,7 @@
         "id": 1,
         "login": "aluno1@ifce.edu.br",
         "senha": "Gbig2626",
-        "favoritos": [
+        "favorites": [
             20,
             26,
             27,
@@ -14,7 +14,7 @@
         "id": 2,
         "login": "aluno2@ifce.edu.br",
         "senha": "Gbig2626",
-        "favoritos": [
+        "favorites": [
             1,
             3,
             7

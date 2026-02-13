@@ -11,8 +11,7 @@
     "declarationMap": true,
     "esModuleInterop": true,
 
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
+    "noEmit": false,
 
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,

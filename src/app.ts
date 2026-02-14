@@ -9,6 +9,8 @@ const app: Application = express();
 app.use(
   cors({
     origin: "https://portal-feedback-aluno.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );

@@ -1,5 +1,5 @@
 import dontenv from "dotenv";
-import app from "./app.ts";
+import app from "./app";
 
 dontenv.config();
 

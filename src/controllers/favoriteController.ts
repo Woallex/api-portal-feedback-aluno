@@ -3,13 +3,8 @@ import fs from "fs";
 import path from "path";
 import { Publication, User } from "../models/Types";
 
-const userPath = path.resolve(__dirname, "..", "data", "users.json");
-const publicationPath = path.resolve(
-  __dirname,
-  "..",
-  "data",
-  "publication.json",
-);
+const usersPath = path.resolve(process.cwd(), 'src', 'data', 'users.json');
+const publicationPath = path.resolve(process.cwd(), 'src', 'data', 'publication.json');
 
 const getData = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
@@ -23,7 +18,7 @@ export const addFavorite = (req: Request, res: Response) => {
     const { publicationId } = req.params;
     const userId = (req as any).userId;
 
-    const users: User[] = getData(userPath);
+    const users: User[] = getData(usersPath);
     const posts: Publication[] = getData(publicationPath);
 
     const postExists = posts.find((p) => p.id === Number(publicationId));
@@ -59,7 +54,7 @@ export const addFavorite = (req: Request, res: Response) => {
     }
 
     users[userIndex]?.favorites.push(Number(publicationId));
-    saveData(userPath, users);
+    saveData(usersPath, users);
 
     return res.status(200).json({
       ok: true,
@@ -83,7 +78,7 @@ export const removeFavotire = (req: Request, res: Response) => {
     const { publicationId } = req.params;
     const userId = (req as any).userId;
 
-    const users: User[] = getData(userPath);
+    const users: User[] = getData(usersPath);
     const userIndex = users.findIndex((u) => u.id === userId);
 
     if (userIndex === -1) {
@@ -101,7 +96,7 @@ export const removeFavotire = (req: Request, res: Response) => {
         (id) => id !== Number(publicationId),
       );
     }
-    saveData(userPath, users);
+    saveData(usersPath, users);
 
     return res.status(200).json({
       ok: true,
@@ -123,7 +118,7 @@ export const removeFavotire = (req: Request, res: Response) => {
 export const listFavorites = (req: Request, res: Response) => {
   try {
     const userId = (req as any).userId;
-    const users: User[] = getData(userPath);
+    const users: User[] = getData(usersPath);
     const posts: Publication[] = getData(publicationPath);
 
     const user = users.find((u) => u.id === userId);

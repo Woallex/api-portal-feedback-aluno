@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import type { Publication } from "../models/Types.ts";
 
-const databasePath = path.join(__dirname, "../", "data", "publication.json");
+const databasePath = path.resolve(process.cwd(), 'src', 'data', 'publication.json');
 
 export const getAllPosts = (req: Request, res: Response) => {
   try {

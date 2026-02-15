@@ -3,8 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Publication } from "../models/Types";
 
-const dbPath = path.join(__dirname, "..", "data", "publication.json");
-
+const dbPath = path.resolve(process.cwd(), 'src', 'data', 'publication.json');
 const readData = (): Publication[] => {
   const data = fs.readFileSync(dbPath, "utf-8");
   return JSON.parse(data);

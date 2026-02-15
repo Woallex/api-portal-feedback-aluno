@@ -43,6 +43,7 @@ export const login = (req: Request, res: Response) => {
 
     return res.status(200).json(successResponse);
   } catch (error) {
+    console.error("ERRO NO LOGIN:", error);
     return res.status(500).json({
       ok: false,
       message: "Erro interno no servidor.",

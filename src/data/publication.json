@@ -1,224 +1,224 @@
 [
     {
         "id": 1,
-        "titulo": "Luz queimada",
-        "corpo": "A luz do banheiro masculino do bloco A está queimada há três dias.",
+        "title": "Luz queimada",
+        "description": "A luz do banheiro masculino do bloco A está queimada há três dias.",
         "category": "Infraestrutura",
         "data": "25/10/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 2,
-        "titulo": "Impressoras sem papel",
-        "corpo": "As impressoras do laboratório de informática estão sem papel há uma semana.",
+        "title": "Impressoras sem papel",
+        "description": "As impressoras do laboratório de informática estão sem papel há uma semana.",
         "category": "Infraestrutura",
         "data": "26/10/2025",
         "autor": "aluno2@ifce.edu.br"
     },
     {
         "id": 3,
-        "titulo": "Cardápio diferente",
-        "corpo": "O almoço servido hoje foi diferente do cardápio publicado no site.",
+        "title": "Cardápio diferente",
+        "description": "O almoço servido hoje foi diferente do cardápio publicado no site.",
         "category": "Alimentação",
         "data": "26/10/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 4,
-        "titulo": "Ônibus saiu cedo",
-        "corpo": "O motorista do ônibus das 18h saiu 10 minutos antes e alguns alunos ficaram.",
+        "title": "Ônibus saiu cedo",
+        "description": "O motorista do ônibus das 18h saiu 10 minutos antes e alguns alunos ficaram.",
         "category": "Transporte",
         "data": "27/10/2025",
         "autor": "aluno2@ifce.edu.br"
     },
     {
         "id": 5,
-        "titulo": "Falta de limpeza",
-        "corpo": "As salas do bloco B não foram limpas após o turno da manhã.",
+        "title": "Falta de limpeza",
+        "description": "As salas do bloco B não foram limpas após o turno da manhã.",
         "category": "Limpeza",
         "data": "27/10/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 6,
-        "titulo": "Wi-Fi instável",
-        "corpo": "A conexão de internet na biblioteca está caindo com frequência.",
+        "title": "Wi-Fi instável",
+        "description": "A conexão de internet na biblioteca está caindo com frequência.",
         "category": "TI/Portais",
         "data": "27/10/2025",
         "autor": "aluno2@ifce.edu.br"
     },
     {
         "id": 7,
-        "titulo": "Falta de ventiladores",
-        "corpo": "A sala 104 do bloco C está sem ventiladores funcionando.",
+        "title": "Falta de ventiladores",
+        "description": "A sala 104 do bloco C está sem ventiladores funcionando.",
         "category": "Infraestrutura",
         "data": "28/10/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 8,
-        "titulo": "Grade de disciplinas",
-        "corpo": "O portal acadêmico ainda mostra a grade antiga do curso de Sistemas.",
+        "title": "Grade de disciplinas",
+        "description": "O portal acadêmico ainda mostra a grade antiga do curso de Sistemas.",
         "category": "Acadêmico",
         "data": "28/10/2025",
         "autor": "aluno2@ifce.edu.br"
     },
     {
         "id": 9,
-        "titulo": "Evento cancelado",
-        "corpo": "A palestra de inovação foi cancelada, mas ninguém foi avisado.",
+        "title": "Evento cancelado",
+        "description": "A palestra de inovação foi cancelada, mas ninguém foi avisado.",
         "category": "Eventos/Calendário",
         "data": "28/10/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 10,
-        "titulo": "Falta de segurança",
-        "corpo": "Alguns alunos tiveram bicicletas furtadas no estacionamento interno.",
+        "title": "Falta de segurança",
+        "description": "Alguns alunos tiveram bicicletas furtadas no estacionamento interno.",
         "category": "Segurança",
         "data": "28/10/2025",
         "autor": "aluno2@ifce.edu.br"
     },
     {
         "id": 11,
-        "titulo": "Luz queimada",
-        "corpo": "Sem iluminação no banheiro masculino, difícil usar à noite.",
+        "title": "Luz queimada",
+        "description": "Sem iluminação no banheiro masculino, difícil usar à noite.",
         "category": "Infraestrutura",
         "data": "28/10/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 12,
-        "titulo": "Fui furtado!",
-        "corpo": "Coloquei meu celular para carregar na sala 03, fui ao banheiro e quando voltei não vi mais o meu celular.",
+        "title": "Fui furtado!",
+        "description": "Coloquei meu celular para carregar na sala 03, fui ao banheiro e quando voltei não vi mais o meu celular.",
         "category": "Segurança",
         "data": "01/11/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 13,
-        "titulo": "Não fui notificado!",
-        "corpo": "Não recebi nenhum e-mail sobre nenhum evento.",
+        "title": "Não fui notificado!",
+        "description": "Não recebi nenhum e-mail sobre nenhum evento.",
         "category": "Eventos/Calendário",
         "data": "01/11/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 14,
-        "titulo": "Comida",
-        "corpo": "Não gostei da janta.",
+        "title": "Comida",
+        "description": "Não gostei da janta.",
         "category": "Alimentação",
         "data": "03/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 15,
-        "titulo": "Desgaste Estrutura",
-        "corpo": "Deveria ser feito uma reforma nesse IF a estrutura está bem desgastada.",
+        "title": "Desgaste Estrutura",
+        "description": "Deveria ser feito uma reforma nesse IF a estrutura está bem desgastada.",
         "category": "Infraestrutura",
         "data": "14/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 16,
-        "titulo": "Merenda",
-        "corpo": "Gente pipoca na merenda, ai foi o auge! kkkkkkkkk",
+        "title": "Merenda",
+        "description": "Gente pipoca na merenda, ai foi o auge! kkkkkkkkk",
         "category": "Alimentação",
         "data": "14/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 17,
-        "titulo": "Boa segurança",
-        "corpo": "Apresar de nunca ter acontecido algo de ruim na Instituição, mas vemos o guardinhas sempre fazer vigilância.",
+        "title": "Boa segurança",
+        "description": "Apresar de nunca ter acontecido algo de ruim na Instituição, mas vemos o guardinhas sempre fazer vigilância.",
         "category": "Segurança",
         "data": "14/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 18,
-        "titulo": "Teste",
-        "corpo": "Teste Teste Teste Teste Teste Teste",
+        "title": "Teste",
+        "description": "Teste Teste Teste Teste Teste Teste",
         "category": "Eventos/Calendário",
         "data": "14/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 19,
-        "titulo": "Teste",
-        "corpo": "teste, teste, teste, teste, teste, teste,",
+        "title": "Teste",
+        "description": "teste, teste, teste, teste, teste, teste,",
         "category": "Eventos/Calendário",
         "data": "14/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 20,
-        "titulo": "Ônibus passou direto",
-        "corpo": "Sai um pouco tarde do trabalho, assim que cheguei na parada pedi para um colega falar com o motorista para ele esperar na parada, mas o motorista passou direto.",
+        "title": "Ônibus passou direto",
+        "description": "Sai um pouco tarde do trabalho, assim que cheguei na parada pedi para um colega falar com o motorista para ele esperar na parada, mas o motorista passou direto.",
         "category": "Transporte",
         "data": "15/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 21,
-        "titulo": "Janela do ônibus",
-        "corpo": "Gente a janela do ônibus do Juazeiro caiu durante trajeto, que loucura kkkk",
+        "title": "Janela do ônibus",
+        "description": "Gente a janela do ônibus do Juazeiro caiu durante trajeto, que loucura kkkk",
         "category": "Transporte",
         "data": "15/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 22,
-        "titulo": "Teste",
-        "corpo": "Teste, Teste, Teste, Teste, Teste, Teste, Teste, Teste, Teste,",
+        "title": "Teste",
+        "description": "Teste, Teste, Teste, Teste, Teste, Teste, Teste, Teste, Teste,",
         "category": "Transporte",
         "data": "15/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 23,
-        "titulo": "Teste",
-        "corpo": "Teste, teste, teste, teste, teste.",
+        "title": "Teste",
+        "description": "Teste, teste, teste, teste, teste.",
         "category": "Segurança",
         "data": "16/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 24,
-        "titulo": "Sem ideia.",
-        "corpo": "Eu não sei mais o que digitar...",
+        "title": "Sem ideia.",
+        "description": "Eu não sei mais o que digitar...",
         "category": "Segurança",
         "data": "16/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 25,
-        "titulo": "Bug",
-        "corpo": "Gente que bug desgarramento!",
+        "title": "Bug",
+        "description": "Gente que bug desgarramento!",
         "category": "Segurança",
         "data": "16/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 26,
-        "titulo": "Tentativa 1000000000",
-        "corpo": "Pelo amor de DEUS da certo!",
+        "title": "Tentativa 1000000000",
+        "description": "Pelo amor de DEUS da certo!",
         "category": "Infraestrutura",
         "data": "16/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 27,
-        "titulo": "Aleluia!",
-        "corpo": "Pai eu quero Ti louvar, tocar o Teu coração e me derramar ao Teus pés...",
+        "title": "Aleluia!",
+        "description": "Pai eu quero Ti louvar, tocar o Teu coração e me derramar ao Teus pés...",
         "category": "Infraestrutura",
         "data": "16/12/2025",
         "autor": "aluno1@ifce.edu.br"
     },
     {
         "id": 28,
-        "titulo": "Ultimo teste",
-        "corpo": "Tudo pronto agora falta subir para o Vercel.",
+        "title": "Ultimo teste",
+        "description": "Tudo pronto agora falta subir para o Vercel.",
         "category": "Segurança",
         "data": "17/12/2025",
         "autor": "aluno1@ifce.edu.br"

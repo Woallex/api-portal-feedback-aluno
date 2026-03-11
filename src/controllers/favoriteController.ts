@@ -1,150 +1,70 @@
 import { Request, Response } from "express";
-import fs from "fs";
-import path from "path";
-import { Publication, User } from "../models/Types";
+import prisma from "../libs/prisma";
 
-const usersPath = path.resolve(process.cwd(), 'src', 'data', 'users.json');
-const publicationPath = path.resolve(process.cwd(), 'src', 'data', 'publication.json');
-
-const getData = (filePath: string) => {
-  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
-};
-const saveData = (filePath: string, data: any) => {
-  return fs.writeFileSync(filePath, JSON.stringify(data, null, 4));
-};
-
-export const addFavorite = (req: Request, res: Response) => {
+export const addFavorite = async (req: Request, res: Response) => {
   try {
-    const { publicationId } = req.params;
+    const { publicationId } = req.params as { publicationId: string };
     const userId = (req as any).userId;
 
-    const users: User[] = getData(usersPath);
-    const posts: Publication[] = getData(publicationPath);
-
-    const postExists = posts.find((p) => p.id === Number(publicationId));
+    const postExists = await prisma.publication.findUnique({
+      where: {
+        id: publicationId,
+      },
+    });
     if (!postExists) {
-      return res.status(404).json({
-        ok: false,
-        error: {
-          code: 404,
-          message: "Publicação não encontrada",
-        },
-      });
+      return res.status(404).json({ message: "Publicação não encontrada" });
     }
 
-    const userIndex = users.findIndex((u) => u.id === userId);
-    if (userIndex === -1) {
-      return res.status(404).json({
-        ok: false,
-        error: {
-          code: 404,
-          message: "Usuário não encontrado",
-        },
-      });
-    }
-
-    if (users[userIndex]?.favorites.includes(Number(publicationId))) {
-      return res.status(400).json({
-        ok: false,
-        error: {
-          code: 400,
-          message: "Publicação já favoritada",
-        },
-      });
-    }
-
-    users[userIndex]?.favorites.push(Number(publicationId));
-    saveData(usersPath, users);
-
-    return res.status(200).json({
-      ok: true,
-      data: null,
-      error: null,
-      message: "Publicação adicionada aos favoritos com sucesso",
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { favorites: true },
     });
-  } catch (error) {
-    return res.status(500).json({
-      ok: false,
-      error: {
-        code: 500,
-        message: "Erro interno do servidor",
-      },
-    });
-  }
-};
 
-export const removeFavotire = (req: Request, res: Response) => {
-  try {
-    const { publicationId } = req.params;
-    const userId = (req as any).userId;
-
-    const users: User[] = getData(usersPath);
-    const userIndex = users.findIndex((u) => u.id === userId);
-
-    if (userIndex === -1) {
-      return res.status(404).json({
-        ok: false,
-        error: {
-          code: 404,
-          message: "Usuário não encontrado",
-        },
-      });
-    }
-
-    if (users[userIndex]) {
-      users[userIndex].favorites = users[userIndex].favorites.filter(
-        (id) => id !== Number(publicationId),
-      );
-    }
-    saveData(usersPath, users);
-
-    return res.status(200).json({
-      ok: true,
-      data: null,
-      error: null,
-      message: "Publicação removida dos favoritos com sucesso",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      ok: false,
-      error: {
-        code: 500,
-        message: "Erro interno do servidor",
-      },
-    });
-  }
-};
-
-export const listFavorites = (req: Request, res: Response) => {
-  try {
-    const userId = (req as any).userId;
-    const users: User[] = getData(usersPath);
-    const posts: Publication[] = getData(publicationPath);
-
-    const user = users.find((u) => u.id === userId);
     if (!user) {
-      return res.status(404).json({
-        ok: false,
-        error: {
-          code: 404,
-          message: "Usuário não encontrado",
-        },
-      });
+      return res.status(404).json({ message: "Usuário não encontrado" });
     }
 
-    const myFavorites = posts.filter(p => user.favorites.includes(p.id));
-    return res.status(200).json({
-      ok: true,
-      data: myFavorites,
-      error: null,
-    });
+    if (user.favorites.includes(publicationId)) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          favorites: {
+            set: user.favorites.filter((id: string) => id !== publicationId),
+          },
+        },
+      });
+      return res.status(200).json({ message: "Publicação removida dos favoritos" });
+
+    } else {
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          favorites: {
+            push: publicationId,
+          },
+        },
+      });
+      return res.status(200).json({ message: "Publicação adicionada aos favoritos" });
+    }
   } catch (error) {
-    return res.status(500).json({
-      ok: false,
-      error: {
-        code: 500,
-        message: "Erro interno do servidor",
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};
+
+export const listFavorites = async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).userId;
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+
+    const myFavorites = await prisma.publication.findMany({
+      where: {
+        id: { in: user?.favorites || [] },
       },
     });
+
+    return res.status(200).json({ message: "Favoritos listados com sucesso", data: myFavorites });
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno do servidor" });
   }
-}
+};

@@ -1,53 +1,53 @@
 import { Request, Response } from "express";
-import fs from "fs";
 import jwt from "jsonwebtoken";
-import path from "path";
-import { ApiResponse, User } from "../models/Types";
+import prisma from "../libs/prisma";
 
-const usersPath = path.resolve(process.cwd(), 'src', 'data', 'users.json');
-const SECRET_KEY = process.env.JWT_SECRET || "secret_key";
+const SECRET_KEY = process.env.SECRET_KEY || "secret_key";
 
-export const login = (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { login, password } = req.body;
-    const users: User[] = JSON.parse(fs.readFileSync(usersPath, "utf-8"));
 
-    const user = users.find(
-      (u) => u.login === login && u.password === password,
-    );
+    const user = await prisma.user.findUnique({
+      where: { login: login }
+    });
 
-    if (!user) {
-      const errorResponse: ApiResponse = {
-        ok: false,
-        message: "Login ou senha incorretos.",
-        data: null,
-        error: { code: 401, message: "Login ou senha incorretos." },
-      };
-      return res.status(401).json(errorResponse);
+    if (!user || user.password !== password) {
+      return res.status(401).json({ message: "Credenciais inválidas" });
     }
 
     const token = jwt.sign({ id: user.id, login: user.login }, SECRET_KEY, {
       expiresIn: "24h",
     });
 
-    const successResponse: ApiResponse = {
-      ok: true,
-      message: "Login realizado com sucesso.",
-      data: {
-        id: user.id,
-        login: user.login,
-        token: token,
-      },
-      error: null,
-    };
-
-    return res.status(200).json(successResponse);
+    return res.status(200).json({ message: "Login realizado com sucesso", token });
   } catch (error) {
-    console.error("ERRO NO LOGIN:", error);
-    return res.status(500).json({
-      ok: false,
-      message: "Erro interno no servidor.",
-      error: { code: 500, message: "Erro interno no servidor." },
-    });
+    return res.status(500).json({ message: "Erro interno no servidor." });
   }
 };
+
+export const register = async (req: Request, res: Response) => {
+  try {
+    const { login, password } = req.body;
+
+    const userExists = await prisma.user.findUnique({ where: { login } });
+
+    if (userExists) {
+      return res.status(400).json({ message: "Usuário já existe" });
+    }
+
+    const newUser = await prisma.user.create( {
+      data: {
+        login,
+        password,
+        favorites: []
+      }
+    })
+    return res.status(201).json({ 
+      message: "Usuário registrado.", 
+      data: { id: newUser.id, login: newUser.login }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno no servidor." });
+  }
+}

@@ -9,7 +9,7 @@ export const login = async (req: Request, res: Response) => {
     const { login, password } = req.body;
 
     const user = await prisma.user.findUnique({
-      where: { login: login }
+      where: { login: login },
     });
 
     if (!user || user.password !== password) {
@@ -20,7 +20,10 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: "24h",
     });
 
-    return res.status(200).json({ message: "Login realizado com sucesso", token });
+    return res.status(200).json({
+      message: "Login realizado com sucesso",
+      data: { token, login: user.login, id: user.id },
+    });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno no servidor." });
   }
@@ -36,18 +39,18 @@ export const register = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Usuário já existe" });
     }
 
-    const newUser = await prisma.user.create( {
+    const newUser = await prisma.user.create({
       data: {
         login,
         password,
-        favorites: []
-      }
-    })
-    return res.status(201).json({ 
-      message: "Usuário registrado.", 
-      data: { id: newUser.id, login: newUser.login }
+        favorites: [],
+      },
+    });
+    return res.status(201).json({
+      message: "Usuário registrado.",
+      data: { id: newUser.id, login: newUser.login },
     });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno no servidor." });
   }
-}
+};

@@ -7,13 +7,7 @@ export const createPublication = async (req: Request, res: Response) => {
     const author = (req as any).userLogin;
 
     if (!title || !description || !category) {
-      return res.status(400).json({
-        ok: false,
-        error: {
-          code: 400,
-          message: "Título, corpo e categoria são obrigatórios.",
-        },
-      });
+      return res.status(400).json({ message: "Título, corpo e categoria são obrigatórios." });
     }
 
     const newPublication = await prisma.publication.create({
@@ -26,16 +20,9 @@ export const createPublication = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(201).json({
-      ok: true,
-      data: newPublication,
-      error: null,
-    });
+    return res.status(201).json({ data: newPublication });
   } catch (error) {
-    return res.status(500).json({
-      ok: false,
-      error: { code: 500, message: "Erro ao salvar a publicação." },
-    });
+    return res.status(500).json({ message: "Erro ao salvar a publicação." });
   }
 };
 
@@ -52,15 +39,9 @@ export const getPublications = async (req: Request, res: Response) => {
       } : {}
     })
 
-    return res.status(200).json({
-      ok: true,
-      data: publications,
-      error: null,
-    });
+    return res.status(201).json({ data: publications });
   } catch (error) {
     console.error("Erro ao ler publicações:", error);
-    return res.status(500).json({
-      message: "Erro interno do servidor ao ler publicações.",
-    });
+    return res.status(500).json({ message: "Erro interno do servidor ao ler publicações." });
   }
 };

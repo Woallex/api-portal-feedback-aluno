@@ -11,28 +11,19 @@ export const authMiddleware = (
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({
-      ok: false,
-      error: { code: 401, message: "Token não fornecido." },
-    });
+    return res.status(401).json({ message: "Token não fornecido." });
   }
 
   const parts = authHeader.split(" ");
   const [scheme, token] = parts;
 
   if (scheme !== "Bearer" || !token) {
-    return res.status(401).json({
-      ok: false,
-      error: { code: 401, message: "Token malformatado." },
-    });
+    return res.status(401).json({ message: "Token malformatado." });
   }
 
   jwt.verify(token, SECRET_KEY, (err, decoded: any) => {
     if (err)
-      return res.status(401).json({
-        ok: false,
-        error: { code: 401, message: "Token inválido ou expirado." },
-      });
+      return res.status(401).json({ message: "Token inválido ou expirado." });
 
     req.userId = decoded.id;
     req.userLogin = decoded.login;

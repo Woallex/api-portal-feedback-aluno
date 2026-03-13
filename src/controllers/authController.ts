@@ -11,7 +11,7 @@ export const login = async (req: Request, res: Response) => {
     const user = await prisma.user.findUnique({where: { login }});
 
     if (!user || user.password !== password) {
-      return res.status(401).json({ ok: false, message: "Credenciais inválidas" });
+      return res.status(401).json({ message: "Credenciais inválidas" });
     }
 
     const token = jwt.sign({ id: user.id, login: user.login }, SECRET_KEY, {
@@ -19,12 +19,11 @@ export const login = async (req: Request, res: Response) => {
     });
 
     return res.status(200).json({
-      ok: true,
       message: "Login realizado com sucesso",
       data: { token, login: user.login, id: user.id },
     });
   } catch (error) {
-    return res.status(500).json({ ok: false, message: "Erro interno no servidor." });
+    return res.status(500).json({ message: "Erro interno no servidor." });
   }
 };
 

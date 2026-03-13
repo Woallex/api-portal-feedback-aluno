@@ -18,7 +18,6 @@ app.use(
 app.use(express.json());
 
 app.use("/auth", authRoutes);
-
 app.use("/publications", publicationRoutes);
 app.use("/favorites", favoriteRoutes);
 

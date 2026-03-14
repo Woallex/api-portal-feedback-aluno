@@ -25,16 +25,14 @@ export const addFavorite = async (req: Request, res: Response) => {
     }
 
     if (user.favorites.includes(publicationId)) {
-      await prisma.user.update({
+      const updatedUser = await prisma.user.update({
         where: { id: userId },
-        data: {
-          favorites: {
-            set: user.favorites.filter((id: string) => id !== publicationId),
-          },
-        },
-      });
-      return res.status(200).json({ message: "Publicação removida dos favoritos" });
-
+        data: { favorites: { set: user.favorites.filter((id: string) => id !== publicationId) } },
+    });
+    return res.status(200).json({ 
+        message: "Publicação removida dos favoritos", 
+        data: updatedUser.favorites 
+    });
     } else {
       await prisma.user.update({
         where: { id: userId },

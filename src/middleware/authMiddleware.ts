@@ -9,13 +9,14 @@ export const authMiddleware = (
   next: NextFunction,
 ) => {
   const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
 
-  if (!authHeader) {
+  if (!token) {
     return res.status(401).json({ message: "Token não fornecido." });
   }
 
   const parts = authHeader.split(" ");
-  const [scheme, token] = parts;
+  const [ scheme ] = parts;
 
   if (scheme !== "Bearer" || !token) {
     return res.status(401).json({ message: "Token malformatado." });

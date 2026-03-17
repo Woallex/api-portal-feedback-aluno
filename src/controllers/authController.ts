@@ -31,6 +31,10 @@ export const register = async (req: Request, res: Response) => {
   try {
     const { login, password } = req.body;
 
+    if (!login || !password) {
+      return res.status(400).json({ message: "Login e senha são obrigatórios." });
+    }
+
     const userExists = await prisma.user.findUnique({ where: { login } });
 
     if (userExists) {
@@ -49,6 +53,7 @@ export const register = async (req: Request, res: Response) => {
       data: { id: newUser.id, login: newUser.login },
     });
   } catch (error) {
+    console.error("Erro ao registrar usuário:", error);
     return res.status(500).json({ message: "Erro interno no servidor." });
   }
 };

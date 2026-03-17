@@ -15,7 +15,7 @@ export const createPublication = async (req: Request, res: Response) => {
         title,
         description,
         category,
-        author,
+        author: author,
         date: new Date().toLocaleDateString("pt-BR"),
       },
     });
@@ -39,7 +39,7 @@ export const getPublications = async (req: Request, res: Response) => {
       } : {}
     })
 
-    return res.status(201).json({ data: publications });
+    return res.status(200).json({ data: publications });
   } catch (error) {
     console.error("Erro ao ler publicações:", error);
     return res.status(500).json({ message: "Erro interno do servidor ao ler publicações." });

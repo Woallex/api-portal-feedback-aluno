@@ -53,16 +53,28 @@ export const listFavorites = async (req: Request, res: Response) => {
   try {
     const userId = (req as any).userId;
 
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const user = await prisma.user.findUnique({ 
+      where: { id: userId },
+      select: { favorites: true },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
 
     const myFavorites = await prisma.publication.findMany({
       where: {
-        id: { in: user?.favorites || [] },
+        id: { in: user?.favorites },
       },
     });
 
-    return res.status(200).json({ message: "Favoritos listados com sucesso", data: myFavorites });
+    return res.status(200).json({ 
+      message: "Favoritos listados com sucesso", 
+      data: myFavorites 
+    });
+
   } catch (error) {
+    console.error("Error ao listar favoritos:", error);
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };

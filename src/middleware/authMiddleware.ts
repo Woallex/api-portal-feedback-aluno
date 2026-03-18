@@ -3,31 +3,27 @@ import jwt from "jsonwebtoken";
 
 const SECRET_KEY = process.env.SECRET_KEY || "secret_key";
 
-export const authMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Token não fornecido ou malformatado." });
+  }
+
+  const token = authHeader.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ message: "Token não fornecido." });
   }
 
-  const parts = authHeader.split(" ");
-  const [ scheme ] = parts;
-
-  if (scheme !== "Bearer" || !token) {
-    return res.status(401).json({ message: "Token malformatado." });
-  }
-
-  jwt.verify(token, SECRET_KEY, (err, decoded: any) => {
-    if (err)
+  jwt.verify(token!, SECRET_KEY, (err, decoded: any) => {
+    if (err) {
       return res.status(401).json({ message: "Token inválido ou expirado." });
+    }
 
-    req.userId = decoded.id;
-    req.userLogin = decoded.login;
+    (req as any).userId = decoded.id;
+    (req as any).userLogin = decoded.login;
+
     return next();
   });
 };

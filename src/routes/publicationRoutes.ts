@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/", publicationController.getPublications);
 router.post("/", authMiddleware, publicationController.createPublication);
+router.delete("/:id", authMiddleware, publicationController.deletePublication);
 
 export default router;

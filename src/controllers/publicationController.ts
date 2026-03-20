@@ -45,3 +45,25 @@ export const getPublications = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Erro interno do servidor ao ler publicações." });
   }
 };
+
+export const deletePublication = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params as { id: string };
+
+    const publicationExists = await prisma.publication.findUnique({
+      where: { id }
+    })
+
+    if (!publicationExists) {
+      return res.status(404).json({ message: "Publicação não encontrada." });
+    }
+
+    await prisma.publication.delete({
+      where: { id }
+    });
+
+    return res.status(200).json({ message: "Publicação deletada com sucesso." });
+  } catch (error) {
+    return res.status(500).json({ message: "Erro ao deletar a publicação." });
+  }
+}

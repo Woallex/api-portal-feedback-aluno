@@ -92,7 +92,7 @@ export const editPublication = async (req: Request, res: Response) => {
     const updatedPublication = await prisma.publication.update({
       where: { id },
       data: {
-        titile: title || undefined,
+        title: title || undefined,
         description: description  || undefined,
         category: category || undefined
       },

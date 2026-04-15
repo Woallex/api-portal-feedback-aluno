@@ -9,6 +9,7 @@ router.use(checkWorkingDays);
 
 router.get("/", publicationController.getPublications);
 router.post("/", authMiddleware, publicationController.createPublication);
+router.put("/:id", authMiddleware, publicationController.editPublication);
 router.delete("/:id", authMiddleware, publicationController.deletePublication);
 
 export default router;

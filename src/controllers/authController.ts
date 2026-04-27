@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import prisma from "../libs/prisma";
@@ -8,9 +9,9 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { login, password } = req.body;
 
-    const user = await prisma.user.findUnique({where: { login }});
+    const user = await prisma.user.findUnique({ where: { login } });
 
-    if (!user || user.password !== password) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Credenciais inválidas" });
     }
 
@@ -32,7 +33,9 @@ export const register = async (req: Request, res: Response) => {
     const { login, password } = req.body;
 
     if (!login || !password) {
-      return res.status(400).json({ message: "Login e senha são obrigatórios." });
+      return res
+        .status(400)
+        .json({ message: "Login e senha são obrigatórios." });
     }
 
     const userExists = await prisma.user.findUnique({ where: { login } });
@@ -41,10 +44,12 @@ export const register = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Usuário já existe" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await prisma.user.create({
       data: {
         login,
-        password,
+        password: hashedPassword,
         favorites: [],
       },
     });

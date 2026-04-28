@@ -21,4 +21,6 @@ model User {
   login     String   @unique
   password  String
   favorites String[]
+  twoFactorCode String?
+  last2FADate String?
 }

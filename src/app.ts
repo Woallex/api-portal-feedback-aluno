@@ -7,9 +7,17 @@ import { requestLogger } from "./middleware/logMiddleware";
 
 const app: Application = express();
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || []
+
 app.use(
   cors({
-    origin: "https://portal-feedback-aluno.vercel.app",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true)
+      } else {
+        callback(new Error("Não permitido pela política de CORS"))
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,

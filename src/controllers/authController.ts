@@ -10,6 +10,12 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { login, password } = req.body;
 
+    if (!login || !password) {
+      return res
+        .status(400)
+        .json({ message: "Login e senha são obrigatórios." });
+    }
+
     const user = await prisma.user.findUnique({ where: { login } });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -17,6 +23,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const today = new Date().toLocaleDateString("pt-BR");
+
     if (user.last2FADate !== today) {
       const verificationCode = Math.floor(
         100000 + Math.random() * 900000,
@@ -29,17 +36,16 @@ export const login = async (req: Request, res: Response) => {
 
       await sendEmail(user.login, verificationCode);
 
-      return res
-        .status(202)
-        .json({
-          requires2FA: true,
-          message: "Código de verificação enviado ao e-mail.",
-        });
+      return res.status(202).json({
+        requires2FA: true,
+        message: "Código de verificação enviado ao e-mail.",
+      });
     }
 
     const token = jwt.sign({ id: user.id, login: user.login }, SECRET_KEY, {
       expiresIn: "24h",
     });
+
     return res.status(200).json({
       token,
       user: { id: user.id, login: user.login },

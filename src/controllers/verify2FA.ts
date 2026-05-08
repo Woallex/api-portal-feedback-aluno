@@ -12,7 +12,7 @@ export const verify2FA = async (req: Request, res: Response) => {
         return res.status(404).json({ message: "Usuário não encontrado." })
     }
 
-  if (user?.twoFactorCode == code) {
+  if (user?.twoFactorCode === code) {
     await prisma.user.update({
       where: { id: user.id },
       data: {

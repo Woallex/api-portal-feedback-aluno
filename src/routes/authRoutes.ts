@@ -6,6 +6,6 @@ const router = Router();
 
 router.post("/login", login);
 router.post("/register", register);
-router.post("/verify2FA", verify2FA)
+router.post("/auth/verify2FA", verify2FA);
 
 export default router;

@@ -33,8 +33,16 @@ export const login = async (req: Request, res: Response) => {
         where: { id: user.id },
         data: { twoFactorCode: verificationCode },
       });
-
-      await sendEmail(user.login, verificationCode);
+      
+      try {
+        await sendEmail(user.login, verificationCode);
+      } catch (mailError) {
+        console.error("Falha Crítica no Envio de E-mail:", mailError);
+        return res.status(500).json({
+          message:
+            "O servidor não conseguiu enviar o e-mail de validação. Tente novamente em alguns instantes.",
+        });
+      }
 
       return res.status(202).json({
         requires2FA: true,
@@ -52,7 +60,7 @@ export const login = async (req: Request, res: Response) => {
       message: "Login realizado com sucesso.",
     });
   } catch (error) {
-    console.log(`Este é o erro: ${error}`)
+    console.log(`Este é o erro: ${error}`);
     return res.status(500).json({ message: "Erro interno no servidor." });
   }
 };

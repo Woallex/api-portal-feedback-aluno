@@ -9,10 +9,18 @@ const transporter = nodemailer.createTransport(<SMTPTransport.Options>{
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 10000,
+  socketTimeout: 10000,
+  dnsTimeout: 10000,
   tls: {
     rejectUnauthorized: false,
+    servername: "smtp.gmail.com"
   },
-});
+  customAuth: {
+  }
+} as any);
+
+(transporter as any).options.family = 4;
 
 export const sendEmail = async (to: string, code: string) => {
   const mailOption = {

@@ -1,26 +1,19 @@
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 
-const transporter = nodemailer.createTransport(<SMTPTransport.Options>{
+const transporter = nodemailer.createTransport((<SMTPTransport.Options>{
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  connectionTimeout: 10000,
-  socketTimeout: 10000,
-  dnsTimeout: 10000,
-  tls: {
-    rejectUnauthorized: false,
-    servername: "smtp.gmail.com"
-  },
-  customAuth: {
-  }
-} as any);
-
-(transporter as any).options.family = 4;
+  family: 4,
+  connectionTimeout: 20000,
+  greetingTimeout: 20000,
+  socketTimeout: 20000,
+}) as any);
 
 export const sendEmail = async (to: string, code: string) => {
   const mailOption = {

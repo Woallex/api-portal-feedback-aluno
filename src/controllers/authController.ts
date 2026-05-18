@@ -34,6 +34,8 @@ export const login = async (req: Request, res: Response) => {
         data: { twoFactorCode: verificationCode },
       });
       
+      console.log(verificationCode);
+
       try {
         await sendEmail(user.login, verificationCode);
       } catch (mailError) {

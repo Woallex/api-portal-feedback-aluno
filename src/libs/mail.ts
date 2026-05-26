@@ -1,12 +1,11 @@
 import { Resend } from 'resend';
 
-// Inicializa o Resend com a sua chave de API
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async (to: string, code: string) => {
   try {
     const data = await resend.emails.send({
-      from: 'estudoswoallex@gmail.com', 
+      from: 'onboarding@resend.dev', 
       to: to,
       subject: "Seu código de acesso - Portal do Feedback",
       text: `Seu código de verificação é: ${code}. Ele é válido apenas para o acesso de hoje.`,

@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { Application } from "express";
+import adminRoutes from "./routes/adminRoutes";
 import authRoutes from "./routes/authRoutes";
 import publicationRoutes from "./routes/publicationRoutes";
 import favoriteRoutes from "./routes/favoriteRouts";
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
 app.use("/publications", publicationRoutes);
 app.use("/favorites", favoriteRoutes);
 

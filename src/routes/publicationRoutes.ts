@@ -8,6 +8,7 @@ const router = Router();
 router.use(checkWorkingDays);
 
 router.get("/", publicationController.getPublications);
+router.get("/export", publicationController.exportToCSV);
 router.post("/", authMiddleware, publicationController.createPublication);
 router.put("/:id", authMiddleware, publicationController.editPublication);
 router.delete("/:id", authMiddleware, publicationController.deletePublication);

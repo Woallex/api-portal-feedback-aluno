@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes";
 import publicationRoutes from "./routes/publicationRoutes";
 import favoriteRoutes from "./routes/favoriteRouts";
 import { requestLogger } from "./middleware/logMiddleware";
+import { monitorRoutes } from "./middleware/monitorMiddleware";
 
 const app: Application = express();
 
@@ -28,6 +29,7 @@ app.use(express.json());
 
 app.use(requestLogger);
 
+app.use(monitorRoutes)
 app.use("/auth", authRoutes);
 app.use("/publications", publicationRoutes);
 app.use("/favorites", favoriteRoutes);

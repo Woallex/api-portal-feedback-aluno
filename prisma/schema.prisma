@@ -29,3 +29,10 @@ model User {
 
   publications Publication[]
 }
+
+model RouteLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  route     String
+  method    String
+  createdAt DateTime @default(now())
+}

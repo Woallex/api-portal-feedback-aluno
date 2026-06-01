@@ -5,6 +5,7 @@ export const createPublication = async (req: Request, res: Response) => {
   try {
     const { title, description, category } = req.body;
     const author = (req as any).userLogin;
+    const file = req.file as any;
 
     if (!title || !description || !category) {
       return res
@@ -16,6 +17,8 @@ export const createPublication = async (req: Request, res: Response) => {
       data: {
         title,
         description,
+        mediaUrl: file ? file.path: null,
+        mediaType: file ? file.mimetype.split("/")[0] : null,
         category,
         author: author,
         date: new Date().toLocaleDateString("pt-BR"),

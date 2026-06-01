@@ -11,6 +11,8 @@ model Publication {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
+  mediaUrl    String?
+  mediaType   String?
   category    String
   date        String
   createdAt   DateTime @default(now())

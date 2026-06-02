@@ -4,7 +4,8 @@ import prisma from "../libs/prisma";
 export const createPublication = async (req: Request, res: Response) => {
   try {
     const { title, description, category } = req.body;
-    const author = (req as any).userLogin;
+    
+    const authorId = (req as any).userId; 
     const file = req.file as any;
 
     if (!title || !description || !category) {
@@ -17,18 +18,19 @@ export const createPublication = async (req: Request, res: Response) => {
       data: {
         title,
         description,
-        mediaUrl: file ? file.path: null,
+        mediaUrl: file ? file.path : null,
         mediaType: file ? file.mimetype.split("/")[0] : null,
         category,
-        author: author,
+        authorId: authorId,
         date: new Date().toLocaleDateString("pt-BR"),
       },
     });
 
-    (req as any).oi?.emit("newPublication", newPublication);
+    (req as any).io?.emit("new_publication", newPublication);
 
     return res.status(201).json({ data: newPublication });
   } catch (error) {
+    console.error("ERRO AO CRIAR PUBLICAÇÃO:", error); 
     return res.status(500).json({ message: "Erro ao salvar a publicação." });
   }
 };

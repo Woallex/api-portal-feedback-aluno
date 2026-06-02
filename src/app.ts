@@ -14,9 +14,9 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true)
+        callback(null, true);
       } else {
-        callback(new Error("Não permitido pela política de CORS"))
+        callback(new Error("Não permitido pela política de CORS"));
       }
     },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -26,10 +26,14 @@ app.use(
 );
 
 app.use(express.json());
-
 app.use(requestLogger);
+app.use(monitorRoutes);
 
-app.use(monitorRoutes)
+app.use((req: any, res, next) => {
+  req.io = app.get("io"); 
+  next();
+});
+
 app.use("/auth", authRoutes);
 app.use("/publications", publicationRoutes);
 app.use("/favorites", favoriteRoutes);

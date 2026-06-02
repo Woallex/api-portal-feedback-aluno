@@ -25,6 +25,8 @@ export const createPublication = async (req: Request, res: Response) => {
       },
     });
 
+    (req as any).oi?.emit("newPublication", newPublication);
+
     return res.status(201).json({ data: newPublication });
   } catch (error) {
     return res.status(500).json({ message: "Erro ao salvar a publicação." });

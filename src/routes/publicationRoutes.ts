@@ -10,8 +10,7 @@ router.use(checkWorkingDays);
 
 router.get("/", publicationController.getPublications);
 router.get("/export", publicationController.exportToCSV);
-router.post("/", authMiddleware, publicationController.createPublication);
-router.post("/", upload.single("file"), publicationController.createPublication);
+router.post("/", authMiddleware, upload.single("file"), publicationController.createPublication);
 router.put("/:id", authMiddleware, publicationController.editPublication);
 router.delete("/:id", authMiddleware, publicationController.deletePublication);
 

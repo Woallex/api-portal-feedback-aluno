@@ -41,14 +41,6 @@ export const getPublications = async (req: Request, res: Response) => {
             },
           }
         : {},
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        category: true,
-        author: true,
-        date: true,
-      },
     });
 
     return res.status(200).json({ data: publications });

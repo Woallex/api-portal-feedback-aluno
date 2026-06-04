@@ -12,7 +12,7 @@ model Publication {
   title       String
   description String
   category    String
-  author      String?
+  author      String
   date        String
 }
 
@@ -20,7 +20,6 @@ model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   login     String   @unique
   password  String
-  role      String   @default("user")
   favorites String[]
   twoFactorCode String?
   last2FADate String?

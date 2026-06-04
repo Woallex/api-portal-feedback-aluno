@@ -1,11 +1,4 @@
-# Ignore local test file with credentials
-test-login.html
-
-# Node modules and build artifacts
 node_modules/
-dist/
-.env
-.env.localnode_modules/
 dist/
 out/
 .env

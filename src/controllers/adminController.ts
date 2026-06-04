@@ -29,7 +29,6 @@ export const getAdminPublications = async (req: Request, res: Response) => {
         title: true,
         description: true,
         category: true,
-        author: true,
         date: true,
       },
     });

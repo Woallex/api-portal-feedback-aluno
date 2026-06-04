@@ -4,7 +4,7 @@ export interface Publication {
   description: string;
   category: string;
   data: string;
-  author: string;
+  author?: string | null;
   isFavorite?: boolean;
 }
 

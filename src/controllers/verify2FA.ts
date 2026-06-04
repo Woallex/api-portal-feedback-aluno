@@ -32,7 +32,10 @@ export const verify2FA = async (req: Request, res: Response) => {
       expiresIn: "24h",
     });
 
-    return res.status(200).json({ token, message: "Acesso liberado!" })
+    return res.status(200).json({
+      message: "Acesso liberado!",
+      data: { token },
+    });
   }
-  return res.status(401).json({ message: "Código inválido." })
+  return res.status(401).json({ message: "Código inválido." });
 };

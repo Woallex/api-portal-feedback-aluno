@@ -6,13 +6,21 @@ const SECRET_KEY = process.env.SECRET_KEY || "secret_key";
 
 export const verify2FA = async (req: Request, res: Response) => {
   const { login, code } = req.body;
-  const user = await prisma.user.findUnique({ where: { login } });
+  const user = await prisma.user.findUnique({
+    where: { login },
+    select: {
+      id: true,
+      login: true,
+      role: true,
+      twoFactorCode: true,
+    },
+  });
 
-    if (!user) {
-        return res.status(404).json({ message: "Usuário não encontrado." })
-    }
+  if (!user) {
+    return res.status(404).json({ message: "Usuário não encontrado." });
+  }
 
-  if (user?.twoFactorCode === code) {
+  if (user.twoFactorCode === code) {
     await prisma.user.update({
       where: { id: user.id },
       data: {
@@ -20,7 +28,7 @@ export const verify2FA = async (req: Request, res: Response) => {
         twoFactorCode: null,
       },
     });
-    const token = jwt.sign({ id: user.id, login: user.login }, SECRET_KEY, {
+    const token = jwt.sign({ id: user.id, login: user.login, role: user.role }, SECRET_KEY, {
       expiresIn: "24h",
     });
 

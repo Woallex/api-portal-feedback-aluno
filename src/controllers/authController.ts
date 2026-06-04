@@ -16,7 +16,17 @@ export const login = async (req: Request, res: Response) => {
         .json({ message: "Login e senha são obrigatórios." });
     }
 
-    const user = await prisma.user.findUnique({ where: { login } });
+    const user = await prisma.user.findUnique({
+      where: { login },
+      select: {
+        id: true,
+        login: true,
+        password: true,
+        role: true,
+        last2FADate: true,
+        twoFactorCode: true,
+      },
+    });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Credenciais inválidas" });
@@ -52,14 +62,13 @@ export const login = async (req: Request, res: Response) => {
       });
     }
 
-    const token = jwt.sign({ id: user.id, login: user.login }, SECRET_KEY, {
+    const token = jwt.sign({ id: user.id, login: user.login, role: user.role }, SECRET_KEY, {
       expiresIn: "24h",
     });
 
     return res.status(200).json({
-      token,
-      user: { id: user.id, login: user.login },
-      message: "Login realizado com sucesso.",
+      message: "Login realizado com sucesso",
+      data: { token },
     });
   } catch (error) {
     console.log(`Este é o erro: ${error}`);
@@ -93,7 +102,8 @@ export const register = async (req: Request, res: Response) => {
       },
     });
     return res.status(201).json({
-      message: "Usuário registrado. Valide seu e-mail no primeiro login.",
+      message: "Usuário registrado.",
+      data: { id: newUser.id },
     });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno no servidor." });

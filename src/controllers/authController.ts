@@ -67,9 +67,8 @@ export const login = async (req: Request, res: Response) => {
     });
 
     return res.status(200).json({
-      token,
-      user: { id: user.id, login: user.login, role: user.role },
-      message: "Login realizado com sucesso.",
+      message: "Login realizado com sucesso",
+      data: { token },
     });
   } catch (error) {
     console.log(`Este é o erro: ${error}`);
@@ -103,7 +102,8 @@ export const register = async (req: Request, res: Response) => {
       },
     });
     return res.status(201).json({
-      message: "Usuário registrado. Valide seu e-mail no primeiro login.",
+      message: "Usuário registrado.",
+      data: { id: newUser.id },
     });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno no servidor." });

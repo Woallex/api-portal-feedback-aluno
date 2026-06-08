@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import authRoutes from "./routes/authRoutes";
 import publicationRoutes from "./routes/publicationRoutes";
 import favoriteRoutes from "./routes/favoriteRouts";
+import metricsRoutes from "./routes/monitorRoutes"
 import { requestLogger } from "./middleware/logMiddleware";
 import { monitorRoutes } from "./middleware/monitorMiddleware";
 
@@ -37,5 +38,6 @@ app.use((req: any, res, next) => {
 app.use("/auth", authRoutes);
 app.use("/publications", publicationRoutes);
 app.use("/favorites", favoriteRoutes);
+app.use("/", metricsRoutes);
 
 export default app;

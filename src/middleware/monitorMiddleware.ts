@@ -1,22 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import prisma from "../libs/prisma";
-import e from "cors";
 
-export const monitorRoutes = (req: Request, res: Response, next: NextFunction) => {
-  next();
-
+export const monitorRoutes = async (req: Request, res: Response, next: NextFunction) => {
   const route = req.baseUrl + req.path;
   const method = req.method;
 
   if (method === "OPTIONS" || route.includes("/export-pdf")) {
-    return;
+    return next();
   }
 
   try {
-    prisma.routeLog.create({
+    await prisma.routeLog.create({
       data: { route, method },
     });
   } catch (error) {
-    console.log(`Erro ao salvar log de rota: ${error}`)
+    console.error(`Erro ao salvar log de rota:`, error);
   }
+
+  next();
 };

@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const generateAndSendBackup = async () => {
   try {
-    console.log("INCIANDO BACKUO DIÁRIO ÁS 17H...");
+    console.log("INCIANDO BACKUP DIÁRIO ÁS 17H...");
 
     const feedbacks = await prisma.publication.findMany({
       include: {

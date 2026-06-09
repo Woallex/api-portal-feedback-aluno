@@ -26,7 +26,12 @@ export const createPublication = async (req: Request, res: Response) => {
       },
     });
 
-    (req as any).io?.emit("new_publication", newPublication);
+    if ((req as any).io) {
+        console.log("Emitindo nova publicação para a rede via Socket!");
+        (req as any).io.emit("new_publication", newPublication);
+    } else {
+        console.log("ERRO GRAVE: req.io não foi encontrado nesta requisição!");
+    }
 
     return res.status(201).json({ data: newPublication });
   } catch (error) {

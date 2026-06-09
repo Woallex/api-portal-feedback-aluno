@@ -12,9 +12,13 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.ALLOWED_ORIGINS?.split(",").map(o => o.trim()) || "*",
+    origin: "*",
     methods: ["GET", "POST"]
   }
+});
+
+io.on("connection", (socket) => {
+    console.log(` Novo aluno conectado ao Socket! ID: ${socket.id}`);
 });
 
 app.set("io", io);

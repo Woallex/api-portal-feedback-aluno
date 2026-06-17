@@ -4,7 +4,9 @@ import prisma from "../libs/prisma";
 export const createPublication = async (req: Request, res: Response) => {
   try {
     const { title, description, category } = req.body;
-    const author = (req as any).userLogin;
+    
+    const authorId = (req as any).userId; 
+    const file = req.file as any;
 
     if (!title || !description || !category) {
       return res
@@ -16,14 +18,24 @@ export const createPublication = async (req: Request, res: Response) => {
       data: {
         title,
         description,
+        mediaUrl: file ? file.path : null,
+        mediaType: file ? file.mimetype.split("/")[0] : null,
         category,
-        author: author,
+        authorId: authorId,
         date: new Date().toLocaleDateString("pt-BR"),
       },
     });
 
+    if ((req as any).io) {
+        console.log("Emitindo nova publicação para a rede via Socket!");
+        (req as any).io.emit("new_publication", newPublication);
+    } else {
+        console.log("ERRO GRAVE: req.io não foi encontrado nesta requisição!");
+    }
+
     return res.status(201).json({ data: newPublication });
   } catch (error) {
+    console.error("ERRO AO CRIAR PUBLICAÇÃO:", error); 
     return res.status(500).json({ message: "Erro ao salvar a publicação." });
   }
 };
@@ -93,8 +105,8 @@ export const editPublication = async (req: Request, res: Response) => {
       where: { id },
       data: {
         title: title || undefined,
-        description: description  || undefined,
-        category: category || undefined
+        description: description || undefined,
+        category: category || undefined,
       },
     });
 
@@ -104,5 +116,42 @@ export const editPublication = async (req: Request, res: Response) => {
     });
   } catch (error) {
     return res.status(500).json({ message: "Erro ao atualizar a publicação." });
+  }
+};
+
+export const exportToCSV = async (req: Request, res: Response) => {
+  try {
+    const feedback = await prisma.publication.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        author: { select: { login: true } },
+      },
+    });
+
+    if (!feedback || feedback.length === 0) {
+      return res.status(404).json({ message: "Nenhum dado encontrado pra exportar." });
+    }
+
+    const csvHeaders = ["ID", "Titulo", "Descrição", "Autor", "Data de Criação"].join(";");
+
+    const csvRows = feedback.map((item) => {
+      const title = item.title.replace(/[\n\r;]/g," ");
+      const description = item.description.replace(/[\n\r;]/g," ");
+      const author = item.author?.login || "Anónimo";
+      const date = new Date(item.createdAt).toLocaleDateString("pt-BR");
+
+      return `${item.id};${title};${description};${author};${date}`;
+    })
+
+    const csvContent = [csvHeaders, ...csvRows].join("\n");
+
+    res.setHeader("Content-type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Despositon", "attachment; filename=feedback_portal.csv");
+
+    return res.status(200).send("\uFFEF" + csvContent);
+
+  } catch (error) {
+    // console.log("Erro ao exportar CSV:", error)
+    return res.status(500).json({ mesage: "Erro interno ao gerar o csv" })
   }
 };
